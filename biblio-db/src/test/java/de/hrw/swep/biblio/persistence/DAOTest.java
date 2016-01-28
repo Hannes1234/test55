@@ -1,9 +1,11 @@
 package de.hrw.swep.biblio.persistence;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.util.Set;
 
 import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
@@ -12,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.hrw.swep.biblio.persistence.dto.BenutzerDTO;
+import de.hrw.swep.biblio.persistence.dto.BuchDTO;
 
 /**
  * Testklasse fuer den Datenbankzugriff
@@ -30,7 +33,7 @@ public class DAOTest {
   public void setup() throws Exception {
     databaseTester = new JdbcDatabaseTester("org.hsqldb.jdbcDriver",
         "jdbc:hsqldb:file:../biblio-db/database/bibdb", "sa", "");
-    databaseTester.setSetUpOperation(new HsqlDatabaseOperation());
+  //  databaseTester.setSetUpOperation(new HsqlDatabaseOperation());
     databaseTester.setDataSet(new FlatXmlDataSetBuilder().build(new File("full.xml")));
     databaseTester.onSetup();
   }
@@ -51,7 +54,9 @@ public class DAOTest {
    */
   @Test
   public void testGetBenutzerByName() {
-    fail();
+ DAO dao = new DAO();
+ Set<BenutzerDTO> b = dao.getBenutzerByName("Berta Brettschneider");
+ assertTrue (b.size()==1);
   }
 
   /** 
@@ -59,7 +64,9 @@ public class DAOTest {
    */
   @Test
   public void testGetBuchByAutor() {
-    fail();
+    DAO dao = new DAO();
+    Set<BuchDTO> b = dao.getBuchByAutor("Lars Lehmann");
+    assertTrue (b.size()==1);
   }
 
   /**
@@ -67,6 +74,8 @@ public class DAOTest {
    */
   @Test
   public void testGetBuchByTitle() {
-    fail();
+    DAO dao = new DAO();
+    Set<BuchDTO> b = dao.getBuchByTitle("Klatsch");
+    assertTrue (b.size()==1);
   }
 }
